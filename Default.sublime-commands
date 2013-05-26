@@ -6,6 +6,10 @@
     {
         "caption": "Beautify: html",
         "command": "code_beautify_html"
+    },
+    {
+        "caption": "Beautify: js",
+        "command": "code_beautify_js"
     }
 ]
 

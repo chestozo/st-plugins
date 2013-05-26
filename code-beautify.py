@@ -28,3 +28,16 @@ class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
 
     def clear(self):
         self.view.erase_status('xmllint')
+
+class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        self.view.run_command('select_all')
+        beautify_code(self, edit, "python ~/configs/tools/jsbeautifier.py -d " + self.view.file_name())
+
+    def clear(self):
+        self.view.erase_status('xmllint')
+
+
+
+
+
