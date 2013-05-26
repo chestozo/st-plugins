@@ -2,6 +2,10 @@
     {
         "caption": "Beautify: xml",
         "command": "code_beautify_xml"
+    },
+    {
+        "caption": "Beautify: html",
+        "command": "code_beautify_html"
     }
 ]
 

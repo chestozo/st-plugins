@@ -20,3 +20,10 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
     def clear(self):
         self.view.erase_status('xmllint')
+
+class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        beautify_code(self, edit, "node ~/configs/tools/tabifier.js " + self.view.file_name())
+
+    def clear(self):
+        self.view.erase_status('xmllint')
