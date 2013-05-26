@@ -23,6 +23,7 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        self.view.run_command('select_all')
         beautify_code(self, edit, "node ~/configs/tools/tabifier.js " + self.view.file_name())
 
     def clear(self):
