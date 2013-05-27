@@ -24,7 +24,7 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.run_command('select_all')
-        beautify_code(self, edit, "node ~/configs/tools/tabifier.js " + self.view.file_name())
+        beautify_code(self, edit, "~/local/bin/node ~/configs/tools/tabifier.js '" + self.view.file_name() + "'")
 
     def clear(self):
         self.view.erase_status('xmllint')
@@ -32,7 +32,7 @@ class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
 class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.run_command('select_all')
-        beautify_code(self, edit, "python ~/configs/tools/jsbeautifier.py -d " + self.view.file_name())
+        beautify_code(self, edit, "python ~/configs/tools/jsbeautifier.py -d '" + self.view.file_name() + "'")
 
     def clear(self):
         self.view.erase_status('xmllint')
