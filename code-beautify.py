@@ -18,7 +18,6 @@ def beautify_code(self, edit, command, command_name):
         self.view.replace(edit, self.view.sel()[0], result.decode('utf-8'))
         sublime.set_timeout(self.clear,0)
 
-
 class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         beautify_code(self, edit, "XMLLINT_INDENT=$'\t' xmllint --format --encode utf-8 -", 'xmllint')
@@ -28,8 +27,18 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
+        command_name = 'tabifier'
         self.view.run_command('select_all')
-        beautify_code(self, edit, "~/local/bin/node ~/configs/tools/tabifier.js " + shellquote(self.view.file_name()), 'tabifier')
+        cmd = [ '/Users/romankartsev/local/bin/node', '/Users/romankartsev/configs/tools/tabifier.js', self.view.file_name() ]
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result, err = p.communicate()
+
+        if err != "":
+            self.view.set_status(command_name, err)
+            sublime.set_timeout(self.clear, 3000)
+        else:
+            self.view.replace(edit, self.view.sel()[0], result.decode('utf-8'))
+            sublime.set_timeout(self.clear,0)
 
     def clear(self):
         self.view.erase_status('tabifier')
