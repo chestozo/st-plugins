@@ -32,21 +32,11 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        command_name = 'tabifier'
-        self.view.run_command('select_all')
-        cmd = [ '/usr/local/bin/node', os.environ['HOME'] + '/configs/tools/tabifier.js', self.view.file_name() ]
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        result, err = p.communicate()
-
-        if err != "":
-            self.view.set_status(command_name, err)
-            sublime.set_timeout(self.clear, 3000)
-        else:
-            self.view.replace(edit, self.view.sel()[0], result.decode('utf-8'))
-            sublime.set_timeout(self.clear,0)
-
-    def clear(self):
-        self.view.erase_status('tabifier')
+        code = self.view.substr(self.view.sel()[0])
+        if code:
+            result = commands.getoutput("bash -c '/usr/local/bin/node ~/configs/tools/tabifier.js <(echo \"" + escape_quotes(code) + "\")'")
+            if result:
+                self.view.replace(edit, self.view.sel()[0], result)
 
 class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
