@@ -29,7 +29,7 @@ class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         command_name = 'tabifier'
         self.view.run_command('select_all')
-        cmd = [ '/Users/romankartsev/local/bin/node', '/Users/romankartsev/configs/tools/tabifier.js', self.view.file_name() ]
+        cmd = [ '/usr/local/bin/node', '/Users/chestozo/configs/tools/tabifier.js', self.view.file_name() ]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         result, err = p.communicate()
 
