@@ -11,6 +11,18 @@ def escape_quotes(s):
     return s.replace('"', '\\"').replace("'", "'\\''")
 
 
+def beautify(self, edit, cmd, tmpfile):
+    code = self.view.substr(self.view.sel()[0]).encode('utf-8')
+    if code:
+        tmpfile = open(tmpfile, 'w')
+        tmpfile.write(code)
+        tmpfile.close()
+
+        result = commands.getoutput(cmd).decode('utf-8')
+        if result:
+            self.view.replace(edit, self.view.sel()[0], result)
+
+
 def beautify_code(self, edit, command, command_name):
     xmlRegion = sublime.Region(0, self.view.size())
     p = subprocess.Popen(command, bufsize=-1, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, shell=True)
@@ -32,16 +44,8 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        code = self.view.substr(self.view.sel()[0])
-        if code:
-            result = commands.getoutput("bash -c '/usr/local/bin/node ~/configs/tools/tabifier.js <(echo \"" + escape_quotes(code) + "\")'")
-            if result:
-                self.view.replace(edit, self.view.sel()[0], result)
+        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type html -x ~/tmp/code-beautify.html'", os.environ['HOME'] + '/tmp/code-beautify.html')
 
 class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        code = self.view.substr(self.view.sel()[0])
-        if code:
-            result = commands.getoutput("bash -c '/usr/bin/python ~/configs/tools/jsbeautifier.py -d <(echo \"" + escape_quotes(code) + "\")'")
-            if result:
-                self.view.replace(edit, self.view.sel()[0], result)
+        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type js ~/tmp/code-beautify.js'", os.environ['HOME'] + '/tmp/code-beautify.js')
