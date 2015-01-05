@@ -1,7 +1,7 @@
 import sublime, sublime_plugin
 
 # Opens privoxy config file and sets syntax to makefile
-class PrivoxyConfigCommand(sublime_plugin.TextCommand):
+class PrivoxyConfigCommand(sublime_plugin.WindowCommand):
     def run(self, edit):
         view = self.view.window().open_file('~/configs/privoxy/my.action')
 
@@ -14,7 +14,7 @@ class PrivoxyConfigCommand(sublime_plugin.TextCommand):
 
         set_syntax()
 
-class YaxyConfigCommand(sublime_plugin.TextCommand):
+class YaxyConfigCommand(sublime_plugin.WindowCommand):
     def run(self, edit):
         view = self.view.window().open_file('~/configs/.yaxyrc')
 
