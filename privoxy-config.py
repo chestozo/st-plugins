@@ -2,8 +2,8 @@ import sublime, sublime_plugin
 
 # Opens privoxy config file and sets syntax to makefile
 class PrivoxyConfigCommand(sublime_plugin.WindowCommand):
-    def run(self, edit):
-        view = self.view.window().open_file('~/configs/privoxy/my.action')
+    def run(self, paths = [], name = ""):
+        view = self.window.open_file('~/configs/privoxy/my.action')
 
         # open_file is a async function so that we need to wait view to load
         def set_syntax():
@@ -15,8 +15,8 @@ class PrivoxyConfigCommand(sublime_plugin.WindowCommand):
         set_syntax()
 
 class YaxyConfigCommand(sublime_plugin.WindowCommand):
-    def run(self, edit):
-        view = self.view.window().open_file('~/configs/.yaxyrc')
+    def run(self, paths = [], name = ""):
+        view = self.window.open_file('~/configs/.yaxyrc')
 
         def set_syntax():
             if view.is_loading():
