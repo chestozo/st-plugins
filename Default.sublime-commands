@@ -1,23 +1,8 @@
 [
-    {
-        "caption": "Beautify: xml",
-        "command": "code_beautify_xml"
-    },
-    {
-        "caption": "Beautify: html",
-        "command": "code_beautify_html"
-    },
-    {
-        "caption": "Beautify: js",
-        "command": "code_beautify_js"
-    },
-    {
-        "caption": "Privoxy: config",
-        "command": "privoxy_config"
-    },
-    {
-        "caption": "Yaxy: config",
-        "command": "yaxy_config"
-    }
+    { "caption": "Beautify: xml",   "command": "code_beautify_xml" },
+    { "caption": "Beautify: html",  "command": "code_beautify_html" },
+    { "caption": "Beautify: js",    "command": "code_beautify_js" },
+    { "caption": "Privoxy: config", "command": "privoxy_config" },
+    { "caption": "Yaxy: config",    "command": "yaxy_config" }
 ]
 
