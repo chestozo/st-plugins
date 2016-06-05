@@ -1,7 +1,7 @@
 # Based on: http://www.bergspot.com/blog/2012/05/formatting-xml-in-sublime-text-2-xmllint/
 # use shell in python: http://www.sublimetext.com/forum/viewtopic.php?f=2&p=12451
 # shell quote: http://stackoverflow.com/a/35857/449345
-import sublime, sublime_plugin, subprocess, os, commands
+import sublime, sublime_plugin, subprocess, os
 
 
 def shellquote(s):
@@ -12,16 +12,28 @@ def escape_quotes(s):
 
 
 def beautify(self, edit, cmd, tmpfile):
-    code = self.view.substr(self.view.sel()[0]).encode('utf-8')
+    code = self.view.substr(self.view.sel()[0]) #.encode('utf-8')
     if code:
+        # tmpfile is used by some of the beautifiers
         tmpfile = open(tmpfile, 'w')
         tmpfile.write(code)
         tmpfile.close()
 
-        result = commands.getoutput(cmd).decode('utf-8')
-        if result:
-            self.view.replace(edit, self.view.sel()[0], result)
-
+        p = subprocess.Popen(
+            cmd,
+            shell=True,
+            bufsize=-1,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            stdin=subprocess.PIPE
+        )
+        output, error = p.communicate(code.encode('utf-8')) # not sure if we need this
+        if error:
+            sublime.error_message(error.decode('utf-8'))
+        else:
+            result = output.decode('utf-8')
+            if result:
+                self.view.replace(edit, self.view.sel()[0], result)
 
 def beautify_code(self, edit, command, command_name):
     xmlRegion = sublime.Region(0, self.view.size())
