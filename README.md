@@ -1,6 +1,6 @@
+### Plugins
 A set of little plugins for ST2 / ST3
 
-# Plugins
 - Code beautifiers
   - JS
   - HTML
