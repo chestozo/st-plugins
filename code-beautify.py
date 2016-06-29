@@ -1,7 +1,7 @@
 # Based on: http://www.bergspot.com/blog/2012/05/formatting-xml-in-sublime-text-2-xmllint/
 # use shell in python: http://www.sublimetext.com/forum/viewtopic.php?f=2&p=12451
 # shell quote: http://stackoverflow.com/a/35857/449345
-import sublime, sublime_plugin, subprocess, os
+import sublime, sublime_plugin, subprocess, os, codecs
 
 
 def shellquote(s):
@@ -15,7 +15,7 @@ def beautify(self, edit, cmd, tmpfile):
     code = self.view.substr(self.view.sel()[0]) #.encode('utf-8')
     if code:
         # tmpfile is used by some of the beautifiers
-        tmpfile = open(tmpfile, 'w')
+        tmpfile = codecs.open(tmpfile, 'w', 'utf-8')
         tmpfile.write(code)
         tmpfile.close()
 
