@@ -3,6 +3,7 @@
     { "caption": "Beautify: html",  "command": "code_beautify_html" },
     { "caption": "Beautify: js",    "command": "code_beautify_js" },
     { "caption": "Privoxy: config", "command": "privoxy_config" },
+    { "caption": "Privoxy: main config", "command": "privoxy_main_config" },
     { "caption": "Yaxy: config",    "command": "yaxy_config" }
 ]
 
