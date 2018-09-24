@@ -56,8 +56,8 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type html -x ~/tmp/code-beautify.html' 2> /dev/null", os.environ['HOME'] + '/tmp/code-beautify.html')
+        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type html -x -r ~/tmp/code-beautify.html > /dev/null ; cat ~/tmp/code-beautify.html'", os.environ['HOME'] + '/tmp/code-beautify.html')
 
 class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type js ~/tmp/code-beautify.js' 2> /dev/null", os.environ['HOME'] + '/tmp/code-beautify.js')
+        beautify(self, edit, "bash -c '. ~/.bashrc ; /usr/local/bin/js-beautify --type js -r ~/tmp/code-beautify.js > /dev/null ; cat ~/tmp/code-beautify.js'", os.environ['HOME'] + '/tmp/code-beautify.js')
