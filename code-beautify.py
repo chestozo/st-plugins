@@ -10,6 +10,18 @@ def shellquote(s):
 def escape_quotes(s):
     return s.replace('"', '\\"').replace("'", "'\\''")
 
+syntax_dict = {
+    'js': 'Packages/Naomi/syntaxes/naomi.fjsx15.sublime-syntax',
+    'html': 'Packages/HTML/HTML.sublime-syntax'
+}
+
+# open_file is a async function so that we need to wait view to load
+def set_syntax(view, file_type):
+    if view.is_loading():
+        sublime.set_timeout(lambda: set_syntax(file_type), 100)
+    else:
+        view.set_syntax_file(syntax_dict[file_type])
+
 
 def beautify(self, edit, cmd, tmpfile):
     code = self.view.substr(self.view.sel()[0]) #.encode('utf-8')
@@ -55,9 +67,12 @@ class CodeBeautifyXmlCommand(sublime_plugin.TextCommand):
         self.view.erase_status('xmllint')
 
 class CodeBeautifyHtmlCommand(sublime_plugin.TextCommand):
+
     def run(self, edit):
         beautify(self, edit, "bash -c '. ~/.bashrc 2&> /dev/null ; /usr/local/bin/js-beautify --type html -x -r ~/tmp/code-beautify.html > /dev/null ; cat ~/tmp/code-beautify.html'", os.environ['HOME'] + '/tmp/code-beautify.html')
+        set_syntax(self.view, 'html')
 
 class CodeBeautifyJsCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         beautify(self, edit, "bash -c '. ~/.bashrc 2&> /dev/null ; /usr/local/bin/js-beautify --type js -r ~/tmp/code-beautify.js > /dev/null ; cat ~/tmp/code-beautify.js'", os.environ['HOME'] + '/tmp/code-beautify.js')
+        set_syntax(self.view, 'js')
